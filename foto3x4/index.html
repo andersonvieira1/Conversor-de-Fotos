@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foto 3x4 — Processador de Imagens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⬛</span>
+        <span class="logo-text">foto<em>3x4</em></span>
+      </div>
+      <p class="tagline">Remoção de fundo · Redimensionamento · Conversão JPEG</p>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- UPLOAD ZONE -->
+    <section class="upload-section" id="uploadSection">
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="8" width="48" height="48" rx="6" stroke="currentColor" stroke-width="2"/>
+            <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 40 L20 28 L30 38 L40 26 L56 42" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="upload-title">Arraste sua foto aqui</p>
+        <p class="upload-sub">ou clique para selecionar</p>
+        <p class="upload-hint">JPG, PNG ou WEBP · Máx. 10 MB</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden />
+        <button class="btn btn-outline" id="selectBtn">Selecionar arquivo</button>
+      </div>
+      <div class="upload-error" id="uploadError" hidden></div>
+    </section>
+
+    <!-- PROCESSING PANEL -->
+    <section class="process-section" id="processSection" hidden>
+
+      <div class="preview-panel">
+        <div class="preview-card">
+          <span class="preview-label">Original</span>
+          <div class="preview-img-wrap">
+            <img id="previewOriginal" alt="Imagem original" />
+          </div>
+        </div>
+        <div class="preview-divider">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="preview-card">
+          <span class="preview-label">Resultado</span>
+          <div class="preview-img-wrap preview-result-wrap" id="resultWrap">
+            <img id="previewResult" alt="Imagem processada" hidden />
+            <div class="result-placeholder" id="resultPlaceholder">
+              <span>Aguardando processamento</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIONS -->
+      <div class="options-panel">
+        <div class="option-group">
+          <label class="option-label">
+            <input type="checkbox" id="optRemoveBg" checked />
+            <span class="option-check"></span>
+            Remover fundo automaticamente
+          </label>
+          <p class="option-desc">Usa IA (MediaPipe SelfieSegmentation) — 100% no navegador, sem enviar dados</p>
+        </div>
+        <div class="option-group">
+          <label class="option-label">
+            <input type="checkbox" id="optResize" checked />
+            <span class="option-check"></span>
+            Redimensionar para 500 × 500 px
+          </label>
+          <p class="option-desc">Centraliza a imagem com fundo branco</p>
+        </div>
+        <div class="option-group">
+          <label class="option-label">
+            <span class="option-label-text">Qualidade JPEG</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" id="qualitySlider" min="60" max="100" value="92" />
+            <span class="slider-value" id="qualityValue">92%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="actions">
+        <button class="btn btn-ghost" id="resetBtn">← Nova imagem</button>
+        <button class="btn btn-primary" id="processBtn">
+          <span id="processBtnText">Processar imagem</span>
+          <span class="btn-spinner" id="processBtnSpinner" hidden></span>
+        </button>
+        <button class="btn btn-success" id="downloadBtn" hidden>
+          ↓ Baixar foto_3x4.jpg
+        </button>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-bar-wrap" id="progressWrap" hidden>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">Iniciando…</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Processamento 100% local · Sua imagem nunca sai do dispositivo · Open source</p>
+  </footer>
+
+  <!-- MediaPipe Selfie Segmentation -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
